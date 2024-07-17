@@ -1,53 +1,46 @@
+# Snake3D Multiplayer Game
 
+This repository contains the code for the Snake3D multiplayer game using Docker and Colyseus.
 
-## Snake Multiplayer
+## Video Demo
 
-A multiplayer snake-inspired arcade game on Unity.
+<iframe src="https://drive.google.com/file/d/1zqLdmRmyfZ9kOZS0lHo8WF6eanj5aIFm/preview" width="640" height="480" allow="autoplay"></iframe>
 
-## Stack
-
-## Gameplay
-[SnakeMultiplayer.webm]([https://drive.google.com/file/d/1zqLdmRmyfZ9kOZS0lHo8WF6eanj5aIFm/view?usp=sharing])
-
-## Deploy
-
-### Docker
+## Docker Setup
 
 > [!WARNING]
-> Required DOCKER
+> Required [docker](https://docker-docs.uclv.cu/engine/install/) and [docker-compose](https://docker-docs.uclv.cu/compose/install/).
 
 1. Go to the server folder:
-
-```
-cd server
-```
+    ```bash
+    cd server
+    ```
 
 2. Start container:
+    ```bash
+    docker-compose up
+    ```
 
-```
-docker-compose up
-```
+That's all. Now you have a container running on your machine with a server for the game on port `2567`. If this port is busy, there will be problems, so you can change it in the corresponding [docker compose file](https://github.com/Scrawach/SnakeMultiplayer/blob/main/server/docker-compose.yml).
 
-Now the conatiner is running on your machine 
+## NPM Setup
 
-### NPM
+> [!WARNING]
+> Required [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-1. Go to server folder with source code:
+1. Go to the server folder with the source code:
+    ```bash
+    cd server/SnakeMultiplayerServer
+    ```
 
-```
-cd server/SnakeMultiplayerServer
-```
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-2. Install dependecies:
-
-```
-npm install
-```
-
-3. Start server:
-
-```
-npm start
-```
+3. Start the server:
+    ```bash
+    npm start
+    ```
 
 That's all. Now you can start the game client and connect to the game.
