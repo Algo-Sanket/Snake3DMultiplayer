@@ -1,0 +1,40 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+      
+      - name: Setup SSH keys
+        run: |
+            set -eu
+            mkdir "$HOME/.ssh"
+            echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+            chmod 600 "$HOME/.ssh/key"
+      
+      - name: Copy source codes to server
+        run: |
+            cd ${{ vars.PATH_TO_SERVER_SOURCE_CODE }} 
+            rsync -azvhPL -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@${{ secrets.server_url }}:${{ vars.PATH_TO_TARGET_SERVER_FOLDER }}
+
+      - name: Build Docker Image
+        uses: appleboy/ssh-action@v1.0.3
+        continue-on-error: true
+        with:
+          host: ${{ secrets.server_url }}
+          username: root
+          key: ${{ secrets.key }}
+          port: 22
+          script: |
+            docker rm $(docker stop $(docker ps -a -q --filter ancestor=snake-multiplayer --format="{{.ID}}"))
+            docker rmi $(docker images | grep 'snake-multiplayer') --force
+            docker build -t snake-multiplayer ${{ vars.PATH_TO_TARGET_SERVER_FOLDER }}
+            docker run -d -p 2567:2567 snake-multiplayer
