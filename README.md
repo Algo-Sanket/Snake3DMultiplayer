@@ -12,32 +12,41 @@ Click the image below to watch the video demo:
 # To play the game, users must download it and then execute Docker and npm commands. Deploying through Colyseus on AWS or Azure requires a subscription for public deployment of the container. Alternatively, Unity Photon Fusion offers a potentially more cost-effective solution for deploying the game online publicly.
 
 Setup Instructions:
-Docker:
+## Docker Setup
 
-Navigate to the server folder:
+> **WARNING**
+> Required [docker](https://docker-docs.uclv.cu/engine/install/) and [docker-compose](https://docker-docs.uclv.cu/compose/install/).
 
-bash
+1. Go to the server folder:
+    ```bash
+    cd server
+    ```
 
-cd server
-Start the container:
+2. Start container:
+    ```bash
+    docker-compose up
+    ```
 
-bash
+That's all. Now you have a container running on your machine with a server for the game on port `2567`. If this port is busy, there will be problems, so you can change it in the corresponding [docker compose file](https://github.com/Algo-Sanket/Snake3DMultiplayer/blob/main/server/docker-compose.yml).
 
-docker-compose up
-NPM:
+## NPM Setup
 
-Navigate to the server folder with source code:
+> **WARNING**
+> Required [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
-bash
+1. Go to the server folder with the source code:
+    ```bash
+    cd server/SnakeMultiplayerServer
+    ```
 
-cd server/SnakeMultiplayerServer
-Install dependencies:
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-bash
+3. Start the server:
+    ```bash
+    npm start
+    ```
 
-npm install
-Start the server:
-
-bash
-
-npm start
+That's all. Now you can start the game client and connect to the game.
